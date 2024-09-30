@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:14:22 by bruno             #+#    #+#             */
-/*   Updated: 2024/09/29 20:15:18 by bruno            ###   ########.fr       */
+/*   Updated: 2024/09/29 23:50:11 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_fork
 	int				fork;
 } t_fork;
 
+struct s_table;
+
 typedef struct s_philosopher
 {
 	int				id;
@@ -63,6 +65,7 @@ typedef struct s_philosopher
 	t_fork			*right_fork;
 	t_mtx			philo_mutex;
 	pthread_t		thread;
+	struct s_table	*table;
 }					t_philosopher;
 
 typedef struct s_table
@@ -106,5 +109,8 @@ int		simulation_finished(t_table *table);
 void	precise_usleep(long time, t_table *table);
 void	write_status(t_philosopher *philosopher, e_philo_state state, t_table *table);
 
+long long current_time_in_ms();
+void	*philosopher_routine(void *arg);
+void	*monitor_routine(void *arg);
 
 #endif

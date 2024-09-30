@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   01-philosophers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:14:01 by bruno             #+#    #+#             */
-/*   Updated: 2024/09/29 20:55:04 by bruno            ###   ########.fr       */
+/*   Updated: 2024/09/29 23:42:58 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_args(int argc, char **argv)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+/* int	main(int argc, char **argv)
 {
 	// t_philosopher	*philo;
 	t_table			*table;
@@ -81,4 +81,39 @@ int	main(int argc, char **argv)
 	// }
 	// destroy_table(table);
 	return (0);
+} */
+
+int main(int argc, char **argv) {
+    t_table *table;
+    int i = 0;
+
+    if (check_args(argc, argv)) {
+        printf("Error: invalid arguments\n");
+        printf("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_meals]\n");
+        return (1);
+    }
+
+    table = init_table(argc, argv);
+    if (!table)
+        return (1);
+
+    // Crear filósofos y hilos de monitor
+    i = 0;
+    while (i < table->philo_count) {
+        thread_handler(&table->philosophers[i].thread, philosopher_routine, &table->philosophers[i], CREATE);
+        i++;
+    }
+    thread_handler(table->monitor, monitor_routine, table, CREATE);
+
+    // Esperar a que los hilos terminen
+    i = 0;
+    while (i < table->philo_count) {
+        thread_handler(&table->philosophers[i].thread, NULL, NULL, JOIN);
+        i++;
+    }
+    thread_handler(table->monitor, NULL, NULL, JOIN);
+
+    // Liberar recursos
+    // free_table(table);
+    return (0);
 }
