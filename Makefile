@@ -1,7 +1,7 @@
-CC		= cc
-CFLAGS 	= -g -Wall -Wextra -Werror 
+CC		= gcc
+CFLAGS 	= -fsanitize=thread -g -Wall -Wextra -Werror 
 RM		= rm -rf
-LDFLAGS = -pthread
+LDFLAGS = -lpthread
 
 SRCS	= $(wildcard *.c)
 OBJS	= $(SRCS:.c=.o)

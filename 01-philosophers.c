@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:14:01 by bruno             #+#    #+#             */
-/*   Updated: 2024/09/29 23:42:58 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:57:13 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int main(int argc, char **argv) {
         thread_handler(&table->philosophers[i].thread, philosopher_routine, &table->philosophers[i], CREATE);
         i++;
     }
-    thread_handler(table->monitor, monitor_routine, table, CREATE);
+    thread_handler(&table->monitor, monitor_routine, table, CREATE);
 
     // Esperar a que los hilos terminen
     i = 0;
@@ -111,7 +111,7 @@ int main(int argc, char **argv) {
         thread_handler(&table->philosophers[i].thread, NULL, NULL, JOIN);
         i++;
     }
-    thread_handler(table->monitor, NULL, NULL, JOIN);
+    thread_handler(&table->monitor, NULL, NULL, JOIN);
 
     // Liberar recursos
     // free_table(table);

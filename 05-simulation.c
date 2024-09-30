@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 20:01:07 by bruno             #+#    #+#             */
-/*   Updated: 2024/09/29 23:51:23 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:18:47 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,19 @@ long long current_time_in_ms() {
     return (time.tv_sec * 1000) + (time.tv_usec / 1000);
 }
 
-void* philosopher_routine(void* arg) {
-    t_philosopher *philo = (t_philosopher *)arg;
+void* philosopher_routine(void* arg) 
+{
+    t_philosopher *philo;
+    philo = (t_philosopher *)arg;
     t_table *table = philo->table;
-
-    while (!get_int_value(&table->table_mutex, &table->end_flag)) {
+    
+    while (1/* !get_int_value(&table->table_mutex, &table->end_flag )*/) {
         write_status(philo, THINKING, table);
 
         // Tomar tenedores
-        mutex_handler(philo->left_fork->fork_mutex, LOCK);
+        mutex_handler(&philo->left_fork->fork_mutex, LOCK);
         write_status(philo, TAKE_LEFT_FORK, table);
-        mutex_handler(philo->right_fork->fork_mutex, LOCK);
+        mutex_handler(&philo->right_fork->fork_mutex, LOCK);
         write_status(philo, TAKE_RIGHT_FORK, table);
 
         // Comer
@@ -42,8 +44,8 @@ void* philosopher_routine(void* arg) {
         philo->meal_count++;
 
         // Soltar tenedores
-        mutex_handler(philo->left_fork->fork_mutex, UNLOCK);
-        mutex_handler(philo->right_fork->fork_mutex, UNLOCK);
+        mutex_handler(&philo->left_fork->fork_mutex, UNLOCK);
+        mutex_handler(&philo->right_fork->fork_mutex, UNLOCK);
 
         // Dormir
         write_status(philo, SLEEPING, table);

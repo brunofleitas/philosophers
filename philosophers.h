@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:14:22 by bruno             #+#    #+#             */
-/*   Updated: 2024/09/29 23:50:11 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:54:56 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef pthread_mutex_t t_mtx;
 
 typedef struct s_fork
 {
-	pthread_mutex_t	*fork_mutex;
+	pthread_mutex_t	fork_mutex;
 	int				fork;
 } t_fork;
 
@@ -81,7 +81,7 @@ typedef struct s_table
 	t_mtx			table_mutex;
 	t_mtx			write_mutex;
 	t_fork			*forks;
-	pthread_t		*monitor;
+	pthread_t		monitor;
 	t_philosopher	*philosophers;
 }					t_table;
 
