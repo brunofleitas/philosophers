@@ -1,5 +1,6 @@
 CC		= gcc
-CFLAGS 	= -fsanitize=thread -g -Wall -Wextra -Werror 
+CFLAGS 	= -fsanitize=thread -g -Wall -Wextra -Werror #DEBUG
+#CFLAGS	= -g -Wall -Wextra -Werror 
 RM		= rm -rf
 LDFLAGS = -lpthread
 

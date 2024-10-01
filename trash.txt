@@ -1,0 +1,25 @@
+/* int	main(int argc, char **argv)
+{
+	// t_philosopher	*philo;
+	t_table			*table;
+
+	if (check_args(argc, argv))
+	{
+		printf("Error: invalid arguments\n");\
+		printf("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_meals]\n");
+		return (1);
+	}
+	table = init_table(argc, argv);
+	if (!table)
+	{
+		printf("Error: table initialization failed\n");
+		return (1);
+	}
+	// if (start_simulation(philo))
+	// {
+	// 	printf("Error: simulation failed\n");
+	// 	return (1);
+	// }
+	// destroy_table(table);
+	return (0);
+} */
