@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:14:22 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/02 11:13:00 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:30:55 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ typedef struct s_fork
 typedef struct s_philosopher
 {
 	int				id;
-	long			meal_count;
+	long	 		meal_count;
 	int				is_full;
-	int				last_meal;
+	long			last_meal;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	pthread_mutex_t	philo_mutex;
@@ -76,12 +76,12 @@ typedef struct s_philosopher
 
 typedef struct s_table
 {
-	long			philo_count;
-	long			time_to_die;
-	long			time_to_eat;
-	long			time_to_sleep;
-	long			meal_count;
-	long 			start_time;
+	long 		philo_count;
+	 long		time_to_die;
+	 long		time_to_eat;
+	 long		time_to_sleep;
+	 long		meal_count;
+	 long		start_time;
 	int 			end_flag; //  1 = all are full or one died
 	int 			all_threads_created;
 	pthread_mutex_t	table_mutex;
@@ -89,6 +89,7 @@ typedef struct s_table
 	t_fork			*forks;
 	pthread_t		monitor;
 	pthread_mutex_t sim;
+	pthread_mutex_t set_value;
 	t_philosopher	*philosophers;
 }					t_table;
 

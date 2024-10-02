@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 20:01:07 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/02 11:16:25 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/02 12:12:36 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void* philosopher_routine(void* arg)
     while (!get_int_value(&table->table_mutex, &table->end_flag ))
 	{
         write_status(philo, THINKING, table);
+        // usleep(1000);
         mutex_handler(&philo->left_fork->fork_mutex, LOCK);  //DEBUGGING
         write_status(philo, TAKE_LEFT_FORK, table);          //DEBUGGING
         mutex_handler(&philo->right_fork->fork_mutex, LOCK); //DEBUGGING
@@ -99,7 +100,7 @@ void* monitor_routine(void* arg)
             if (time_since_last_meal >= table->time_to_die)
             {
                 write_status(&table->philosophers[i], DIED, table);
-                set_int_value(&table->table_mutex, &table->end_flag, 1);
+                set_int_value(&table->set_value, &table->end_flag, 1);
                 mutex_handler(&table->table_mutex, UNLOCK);
                 return (0);
             }

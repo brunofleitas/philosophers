@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 19:21:43 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/02 11:12:48 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:55:28 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ t_table *init_table(int argc, char **argv)
 void init_table_data(t_table *table, int argc, char **argv)
 {
 	table->philo_count = ft_atoi(argv[1]);
-	table->time_to_die = ft_atoi(argv[2]) * 1000;
-	table->time_to_eat = ft_atoi(argv[3]) * 1000;
-	table->time_to_sleep = ft_atoi(argv[4]) * 1000;
+	table->time_to_die = ft_atoi(argv[2]);
+	table->time_to_eat = ft_atoi(argv[3]);
+	table->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		table->meal_count = ft_atoi(argv[5]);
 	else
@@ -77,6 +77,7 @@ void init_table_data(t_table *table, int argc, char **argv)
 	mutex_handler(&table->table_mutex, INIT);
 	mutex_handler(&table->write_mutex, INIT);
 	mutex_handler(&table->sim, INIT);
+	mutex_handler(&table->set_value, INIT);
 }
 
 /**
