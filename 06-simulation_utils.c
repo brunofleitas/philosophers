@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:25:58 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/10/02 12:33:06 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:43:06 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,15 @@ void write_status(t_philosopher *philosopher, e_philo_state state, t_table *tabl
     mutex_handler(&table->write_mutex, LOCK);
     if (state == DIED)
         printf("%ld %d %s\n", time, philosopher->id + 1, "died");
-    else if (state == EATING)// && !simulation_finished(table))
+    else if ((state == EATING) && !simulation_finished(table))
         printf("%ld %d %s\n", time, philosopher->id + 1, "is eating");
-    else if (state == SLEEPING)// && !simulation_finished(table))
+    else if ((state == SLEEPING) && !simulation_finished(table))
         printf("%ld %d %s\n", time, philosopher->id + 1, "is sleeping");
-    else if (state == THINKING)// && !simulation_finished(table))
+    else if ((state == THINKING) && !simulation_finished(table))
         printf("%ld %d %s\n", time, philosopher->id + 1, "is thinking");
-    else if (state == TAKE_LEFT_FORK) //&& !simulation_finished(table))
+    else if ((state == TAKE_LEFT_FORK) && !simulation_finished(table))
         printf("%ld %d %s\n", time, philosopher->id + 1, "has taken left fork");   //DEBUGGING
-    else if (state == TAKE_RIGHT_FORK)// && !simulation_finished(table))            //DEBUGGING
+    else if ((state == TAKE_RIGHT_FORK) && !simulation_finished(table))            //DEBUGGING
         printf("%ld %d %s\n", time, philosopher->id + 1, "has taken right fork");  //DEBUGGING
     // usleep(1000);
     mutex_handler(&table->write_mutex, UNLOCK);                                    //DEBUGGING

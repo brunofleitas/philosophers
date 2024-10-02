@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 20:01:07 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/02 12:12:36 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/02 17:09:00 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,9 @@ void* philosopher_routine(void* arg)
     
 	philo = (t_philosopher *)arg;
 	table = philo->table;
-    // if (philo->id % 2 == 0)
-    //     precise_usleep(100, table);
-    while (!get_int_value(&table->table_mutex, &table->end_flag ))
+    while (!get_int_value(&table->table_mutex, &table->end_flag))
 	{
         write_status(philo, THINKING, table);
-        // usleep(1000);
         mutex_handler(&philo->left_fork->fork_mutex, LOCK);  //DEBUGGING
         write_status(philo, TAKE_LEFT_FORK, table);          //DEBUGGING
         mutex_handler(&philo->right_fork->fork_mutex, LOCK); //DEBUGGING
@@ -59,10 +56,20 @@ void* philosopher_routine(void* arg)
         {
             philo->meal_count++;
             if (philo->meal_count >= table->meal_count)
+            {
                 philo->is_full = 1;
+                mutex_handler(&philo->left_fork->fork_mutex, UNLOCK);
+                mutex_handler(&philo->right_fork->fork_mutex, UNLOCK);
+                return (0);
+            }
         }
         mutex_handler(&philo->left_fork->fork_mutex, UNLOCK);
         mutex_handler(&philo->right_fork->fork_mutex, UNLOCK);
+        if (table->philo_count == 1)
+        {
+            set_int_value(&table->table_mutex, &table->end_flag, 1);
+            return (0);
+        }
         write_status(philo, SLEEPING, table);
         precise_usleep(table->time_to_sleep, table);
     }
@@ -85,6 +92,7 @@ void* monitor_routine(void* arg)
 {
     t_table *table;
     int i;
+    int bool;
     long time_since_last_meal;
 
     table = (t_table *)arg;
@@ -92,12 +100,27 @@ void* monitor_routine(void* arg)
     while (!get_int_value(&table->table_mutex, &table->end_flag))
     {
         i = 0;
+        bool = 0;
+        while (i < table->philo_count)
+        {
+            if (table->philosophers[i].is_full)
+                bool = 1;
+            else 
+            {
+                bool = 0;
+                break ;
+            }
+            i++;
+        }
+        if (bool)
+            set_int_value(&table->table_mutex, &table->end_flag, 1);
+        i = 0;
         while (i < table->philo_count)
         {
             mutex_handler(&table->table_mutex, LOCK);
             time_since_last_meal = get_time() - 
                                    table->philosophers[i].last_meal;
-            if (time_since_last_meal >= table->time_to_die)
+            if ((time_since_last_meal >= table->time_to_die && !table->philosophers[i].is_full))
             {
                 write_status(&table->philosophers[i], DIED, table);
                 set_int_value(&table->set_value, &table->end_flag, 1);
