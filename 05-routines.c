@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 20:01:07 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/01 09:48:33 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/02 10:42:28 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,12 @@ void* philosopher_routine(void* arg)
         philo->last_meal = get_time();
         mutex_handler(&table->table_mutex, UNLOCK);
         precise_usleep(table->time_to_eat, table);
-        philo->meal_count++;
-        if (table->meal_count != -1 && philo->meal_count >= table->meal_count)
+        if (table->meal_count != -1)
+        {
+            philo->meal_count++;
+            if (philo->meal_count >= table->meal_count)
             philo->is_full = 1;
+        }
         mutex_handler(&philo->left_fork->fork_mutex, UNLOCK);
         mutex_handler(&philo->right_fork->fork_mutex, UNLOCK);
         write_status(philo, SLEEPING, table);
@@ -96,7 +99,7 @@ void* monitor_routine(void* arg)
                 write_status(&table->philosophers[i], DIED, table);
                 set_int_value(&table->table_mutex, &table->end_flag, 1);
                 mutex_handler(&table->table_mutex, UNLOCK);
-                return (NULL);
+                exit (0);
             }
             mutex_handler(&table->table_mutex, UNLOCK);
             i++;

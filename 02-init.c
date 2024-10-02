@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 19:21:43 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/01 10:31:45 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/02 09:29:50 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void init_table_data(t_table *table, int argc, char **argv)
 		table->meal_count = ft_atoi(argv[5]);
 	else
 		table->meal_count = -1;
+	
 	table->start_time = get_time();
 	table->end_flag = 0;
 	table->all_threads_created = 0;

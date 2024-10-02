@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:14:01 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/01 10:41:57 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/01 12:05:36 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ int main(int argc, char **argv)
 {
     t_table *table;
 	
+	// printf("time: %ld\n", get_time());
     if (check_args(argc, argv))
 	{
         printf("Error: invalid arguments\n");

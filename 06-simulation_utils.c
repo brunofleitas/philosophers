@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:25:58 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/10/01 09:40:44 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/02 09:21:29 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,13 @@ long get_time(void)
 void precise_usleep(long time, t_table *table)
 {
     long start_time;
-    struct timeval tv;
 
-    gettimeofday(&tv, NULL);
-    start_time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+    start_time = get_time();
     while (get_time() - start_time < time)
     {
         if (simulation_finished(table))
             break;
-        usleep(50);
+        usleep(1000);
     }
 }
 
