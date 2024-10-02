@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:14:22 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/02 09:11:20 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:13:00 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_table
 	pthread_mutex_t	write_mutex;
 	t_fork			*forks;
 	pthread_t		monitor;
+	pthread_mutex_t sim;
 	t_philosopher	*philosophers;
 }					t_table;
 

@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:25:58 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/10/02 09:21:29 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:13:10 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@
  */
 int simulation_finished(t_table *table)
 {
-    return (get_int_value(&table->table_mutex, &table->end_flag));
+    int bool;
+
+    mutex_handler(&table->sim, LOCK);
+    bool = get_int_value(&table->table_mutex, &table->end_flag);
+    mutex_handler(&table->sim, UNLOCK);
+    return(bool);
 }
 
 /**

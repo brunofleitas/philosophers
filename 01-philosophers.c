@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:14:01 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/01 12:05:36 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:13:01 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,9 @@ int main(int argc, char **argv)
     }
     table = init_table(argc, argv);
     if (!table)
+	{
         return (1);
+	}
 	if (start_simulation(table))
 	{
 		printf("Error: simulation failed\n");

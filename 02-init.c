@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 19:21:43 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/02 09:29:50 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:12:48 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void init_table_data(t_table *table, int argc, char **argv)
 	table->all_threads_created = 0;
 	mutex_handler(&table->table_mutex, INIT);
 	mutex_handler(&table->write_mutex, INIT);
+	mutex_handler(&table->sim, INIT);
 }
 
 /**
