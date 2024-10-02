@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 19:21:43 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/02 11:55:28 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/03 00:39:17 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void init_table_data(t_table *table, int argc, char **argv)
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		table->meal_count = ft_atoi(argv[5]);
+		table->meal_count = ft_atoi(argv[5]) + 1;
 	else
 		table->meal_count = -1;
 	
