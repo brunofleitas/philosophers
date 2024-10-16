@@ -6,7 +6,7 @@
 /*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:13:47 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/16 13:51:31 by bruno            ###   ########.fr       */
+/*   Updated: 2024/10/16 16:43:11 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
  *             - INIT: Indicates a mutex initialization operation.
  *             - DESTROY: Indicates a mutex destruction operation.
  */
-void	handle_mutex_error(int status, e_mutex_code code)
+void	handle_mutex_error(int status, t_mutex_code code)
 {
 	if (status != 0)
 	{
@@ -59,7 +59,7 @@ void	handle_mutex_error(int status, e_mutex_code code)
  * The function calls handle_mutex_error to handle any errors that occur
  * during the mutex operations.
  */
-void	mutex_handler(pthread_mutex_t *mutex, e_mutex_code code)
+void	mutex_handler(pthread_mutex_t *mutex, t_mutex_code code)
 {
 	if (code == LOCK)
 		handle_mutex_error(pthread_mutex_lock(mutex), code);
@@ -82,7 +82,7 @@ void	mutex_handler(pthread_mutex_t *mutex, e_mutex_code code)
  * @param code The type of thread operation that was attempted (CREATE, JOIN,
 	DETACH).
  */
-void	handle_thread_error(int status, e_thread_code code)
+void	handle_thread_error(int status, t_thread_code code)
 {
 	if (status != 0)
 	{
@@ -112,7 +112,7 @@ void	handle_thread_error(int status, e_thread_code code)
  * handle_thread_error function with the appropriate error code.
  */
 void	thread_handler(pthread_t *thread, void *(*foo)(void *), void *data,
-		e_thread_code code)
+		t_thread_code code)
 {
 	if (code == CREATE)
 		handle_thread_error(pthread_create(thread, NULL, foo, data), code);
