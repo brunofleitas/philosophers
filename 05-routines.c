@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 20:01:07 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/02 17:09:00 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:37:51 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,14 @@ void* philosopher_routine(void* arg)
     while (!get_int_value(&table->table_mutex, &table->end_flag))
 	{
         write_status(philo, THINKING, table);
-        mutex_handler(&philo->left_fork->fork_mutex, LOCK);  //DEBUGGING
-        write_status(philo, TAKE_LEFT_FORK, table);          //DEBUGGING
+        mutex_handler(&philo->left_fork->fork_mutex, LOCK);
+        write_status(philo, TAKE_LEFT_FORK, table); 
+        if (table->philo_count == 1)
+        {
+            usleep(philo->table->time_to_die);
+            mutex_handler(&philo->left_fork->fork_mutex, UNLOCK);
+            return (0);
+        }
         mutex_handler(&philo->right_fork->fork_mutex, LOCK); //DEBUGGING
         write_status(philo, TAKE_RIGHT_FORK, table);         //DEBUGGING
         write_status(philo, EATING, table);
@@ -65,11 +71,6 @@ void* philosopher_routine(void* arg)
         }
         mutex_handler(&philo->left_fork->fork_mutex, UNLOCK);
         mutex_handler(&philo->right_fork->fork_mutex, UNLOCK);
-        if (table->philo_count == 1)
-        {
-            set_int_value(&table->table_mutex, &table->end_flag, 1);
-            return (0);
-        }
         write_status(philo, SLEEPING, table);
         precise_usleep(table->time_to_sleep, table);
     }

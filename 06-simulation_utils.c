@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:25:58 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/10/02 14:43:06 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:39:57 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,8 @@ void precise_usleep(long time, t_table *table)
 
     (void)table;
     start_time = get_time();
-    // dprintf(2, "time to sleep: %ld\n", time); //DEBUGGING
-    // dprintf(2, "start_time: %ld\n", start_time); //DEBUGGING
-    // dprintf(2, "time: %ld\n", get_time()); //DEBUGGING
-    // dprintf(2, "time result: %ld\n", get_time() - start_time); //DEBUGGING
     while (get_time() - start_time < time)
-    {
-        // dprintf(2, "time result 2: %ld\n", get_time() - start_time);
         usleep(1000);
-    }
 }
 
 /**
@@ -106,9 +99,8 @@ void write_status(t_philosopher *philosopher, e_philo_state state, t_table *tabl
     else if ((state == THINKING) && !simulation_finished(table))
         printf("%ld %d %s\n", time, philosopher->id + 1, "is thinking");
     else if ((state == TAKE_LEFT_FORK) && !simulation_finished(table))
-        printf("%ld %d %s\n", time, philosopher->id + 1, "has taken left fork");   //DEBUGGING
-    else if ((state == TAKE_RIGHT_FORK) && !simulation_finished(table))            //DEBUGGING
-        printf("%ld %d %s\n", time, philosopher->id + 1, "has taken right fork");  //DEBUGGING
-    // usleep(1000);
-    mutex_handler(&table->write_mutex, UNLOCK);                                    //DEBUGGING
+        printf("%ld %d %s\n", time, philosopher->id + 1, "has taken fork");
+    else if ((state == TAKE_RIGHT_FORK) && !simulation_finished(table))
+        printf("%ld %d %s\n", time, philosopher->id + 1, "has taken fork");
+    mutex_handler(&table->write_mutex, UNLOCK);
 }

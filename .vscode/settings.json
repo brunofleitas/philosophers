@@ -1,5 +1,6 @@
 {
     "files.associations": {
         "philosophers.h": "c"
-    }
+    },
+    "makefile.configureOnOpen": false
 }
