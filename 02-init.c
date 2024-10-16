@@ -3,34 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   02-init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 19:21:43 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/16 13:23:28 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:50:53 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 /**
- * @file 02-init.c
- * @brief Initialization functions for the philosophers simulation.
- *
- * This file contains functions to initialize the table, forks, and philosophers
- * for the dining philosophers problem simulation.
- */
-
-/**
  * @brief Initializes the table structure.
  *
- * Allocates memory for the table structure and initializes its data, forks, and philosophers.
+ * Allocates memory for the table structure and initializes its data, forks,
+	and philosophers.
  * If any initialization fails, frees allocated memory and returns NULL.
  *
  * @param argc The number of command-line arguments.
  * @param argv The command-line arguments.
  * @return A pointer to the initialized table structure, or NULL on failure.
  */
-t_table *init_table(int argc, char **argv)
+t_table	*init_table(int argc, char **argv)
 {
 	t_table	*table;
 
@@ -53,14 +46,16 @@ t_table *init_table(int argc, char **argv)
 /**
  * @brief Initializes the table data.
  *
- * Sets the number of philosophers, time to die, time to eat, time to sleep, and meal count
- * based on the command-line arguments. Initializes the start time, end flag, and mutexes.
+ * Sets the number of philosophers, time to die, time to eat, time to sleep,
+	and meal count
+ * based on the command-line arguments. Initializes the start time, end flag,
+	and mutexes.
  *
  * @param table A pointer to the table structure.
  * @param argc The number of command-line arguments.
  * @param argv The command-line arguments.
  */
-void init_table_data(t_table *table, int argc, char **argv)
+void	init_table_data(t_table *table, int argc, char **argv)
 {
 	table->philo_count = ft_atoi(argv[1]);
 	table->time_to_die = ft_atoi(argv[2]);
@@ -70,7 +65,6 @@ void init_table_data(t_table *table, int argc, char **argv)
 		table->meal_count = ft_atoi(argv[5]) + 1;
 	else
 		table->meal_count = -1;
-	
 	table->start_time = get_time();
 	table->end_flag = 0;
 	table->all_threads_created = 0;
@@ -88,9 +82,9 @@ void init_table_data(t_table *table, int argc, char **argv)
  * @param table A pointer to the table structure.
  * @return 1 on success, 0 on failure.
  */
-int init_forks(t_table *table)
+int	init_forks(t_table *table)
 {
-	int i;
+	int	i;
 
 	table->forks = malloc(sizeof(t_fork) * table->philo_count);
 	if (!table->forks)
@@ -108,15 +102,16 @@ int init_forks(t_table *table)
 /**
  * @brief Initializes the philosophers.
  *
- * Allocates memory for the philosophers and initializes their IDs, meal counts, fullness status,
+ * Allocates memory for the philosophers and initializes their IDs, meal counts,
+	fullness status,
  * last meal times, and mutexes. Assigns forks to each philosopher.
  *
  * @param table A pointer to the table structure.
  * @return 1 on success, 0 on failure.
  */
-int init_philosophers(t_table *table)
+int	init_philosophers(t_table *table)
 {
-	int i;
+	int	i;
 
 	table->philosophers = malloc(sizeof(t_philosopher) * table->philo_count);
 	if (!table->philosophers)
@@ -129,7 +124,8 @@ int init_philosophers(t_table *table)
 		table->philosophers[i].is_full = 0;
 		table->philosophers[i].last_meal = get_time();
 		mutex_handler(&table->philosophers[i].philo_mutex, INIT);
-		assign_forks(&table->philosophers[i], &table->forks[i], &table->forks[(i + 1) % table->philo_count], i);
+		assign_forks(&table->philosophers[i], &table->forks[i], &table->forks[(i
+				+ 1) % table->philo_count], i);
 		table->philosophers[i].table = table;
 		i++;
 	}
@@ -146,7 +142,8 @@ int init_philosophers(t_table *table)
  * @param right_fork A pointer to the right fork.
  * @param id The ID of the philosopher.
  */
-void assign_forks(t_philosopher *philosopher, t_fork *left_fork, t_fork *right_fork, int id)
+void	assign_forks(t_philosopher *philosopher, t_fork *left_fork,
+		t_fork *right_fork, int id)
 {
 	if (id % 2 == 0)
 	{

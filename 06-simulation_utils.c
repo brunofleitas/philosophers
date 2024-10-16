@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   06-simulation_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:25:58 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/10/16 13:39:57 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:52:17 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
  * @param table A pointer to the simulation table structure.
  * @return An integer value indicating whether the simulation has finished.
  */
-int simulation_finished(t_table *table)
+int	simulation_finished(t_table *table)
 {
-    int bool;
+	int	bool;
 
-    mutex_handler(&table->sim, LOCK);
-    bool = get_int_value(&table->table_mutex, &table->end_flag);
-    mutex_handler(&table->sim, UNLOCK);
-    return(bool);
+	mutex_handler(&table->sim, LOCK);
+	bool = get_int_value(&table->table_mutex, &table->end_flag);
+	mutex_handler(&table->sim, UNLOCK);
+	return (bool);
 }
 
 /**
@@ -40,67 +40,68 @@ int simulation_finished(t_table *table)
  *
  * @return The current time in milliseconds.
  */
-long get_time(void)
+long	get_time(void)
 {
-    struct timeval tv;
+	struct timeval	tv;
 
-    gettimeofday(&tv, NULL);
-    return (tv.tv_sec * 1000LL + tv.tv_usec / 1000LL);
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000LL + tv.tv_usec / 1000LL);
 }
 
 /**
  * precise_usleep - Sleeps for a precise amount of time in milliseconds.
- * 
+ *
  * This function uses a combination of gettimeofday and usleep to achieve
  * a more accurate sleep duration compared to using usleep alone. It also
  * checks periodically if the simulation has finished and breaks out of the
  * sleep loop if it has.
- * 
+ *
  * @param time: The amount of time to sleep in milliseconds.
  * @param table: A pointer to the simulation table structure, used to check
  *               if the simulation has finished.
  */
-void precise_usleep(long time, t_table *table)
+void	precise_usleep(long time, t_table *table)
 {
-    long start_time;
+	long	start_time;
 
-    (void)table;
-    start_time = get_time();
-    while (get_time() - start_time < time)
-        usleep(1000);
+	(void)table;
+	start_time = get_time();
+	while (get_time() - start_time < time)
+		usleep(1000);
 }
 
 /**
  * @brief Writes the status of a philosopher to the console.
  *
- * This function prints the current status of a philosopher (eating, 
- * sleeping, thinking, or died) along with the time elapsed since the start 
- * of the simulation. It ensures thread-safe access to the console output 
+ * This function prints the current status of a philosopher (eating,
+ * sleeping, thinking, or died) along with the time elapsed since the start
+ * of the simulation. It ensures thread-safe access to the console output
  * by using a mutex.
  *
  * @param philosopher A pointer to the philosopher whose status is being written
- * @param state The current state of the philosopher (e.g., EATING, SLEEPING, 
+ * @param state The current state of the philosopher (e.g., EATING, SLEEPING,
  * THINKING, DIED).
- * @param table A pointer to the table structure containing simulation data 
+ * @param table A pointer to the table structure containing simulation data
  * and synchronization primitives.
  */
-void write_status(t_philosopher *philosopher, e_philo_state state, t_table *table)
+void	write_status(t_philosopher *philosopher, e_philo_state state,
+		t_table *table)
 {
-    long time;
+	long	time;
 
-    time = get_time() - table->start_time;
-    mutex_handler(&table->write_mutex, LOCK);
-    if (state == DIED)
-        printf("%ld %d %s\n", time, philosopher->id + 1, "died");
-    else if ((state == EATING) && !simulation_finished(table))
-        printf("%ld %d %s\n", time, philosopher->id + 1, "is eating");
-    else if ((state == SLEEPING) && !simulation_finished(table))
-        printf("%ld %d %s\n", time, philosopher->id + 1, "is sleeping");
-    else if ((state == THINKING) && !simulation_finished(table))
-        printf("%ld %d %s\n", time, philosopher->id + 1, "is thinking");
-    else if ((state == TAKE_LEFT_FORK) && !simulation_finished(table))
-        printf("%ld %d %s\n", time, philosopher->id + 1, "has taken fork");
-    else if ((state == TAKE_RIGHT_FORK) && !simulation_finished(table))
-        printf("%ld %d %s\n", time, philosopher->id + 1, "has taken fork");
-    mutex_handler(&table->write_mutex, UNLOCK);
+	time = get_time() - table->start_time;
+	mutex_handler(&table->write_mutex, LOCK);
+	if (state == DIED)
+		printf("%ld %d %s\n", time, philosopher->id + 1, "died");
+	else if ((state == EATING) && !simulation_finished(table))
+		printf("%ld %d %s\n", time, philosopher->id + 1, "is eating");
+	else if ((state == SLEEPING) && !simulation_finished(table))
+		printf("%ld %d %s\n", time, philosopher->id + 1, "is sleeping");
+	else if ((state == THINKING) && !simulation_finished(table))
+		printf("%ld %d %s\n", time, philosopher->id + 1, "is thinking");
+	else if ((state == TAKE_LEFT_FORK) && !simulation_finished(table))
+		printf("%ld %d %s\n", time, philosopher->id + 1, "has taken fork");
+	else if ((state == TAKE_RIGHT_FORK) && !simulation_finished(table))
+		printf("%ld %d %s\n", time, philosopher->id + 1, "has taken fork");
+	mutex_handler(&table->write_mutex, UNLOCK);
 }

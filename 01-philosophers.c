@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   01-philosophers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:14:01 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/16 13:23:33 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:57:41 by bruno            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /**
  * @brief Converts a string to an integer.
  *
- * This function, `ft_atoi`, takes a string as input and converts it to 
+ * This function, `ft_atoi`, takes a string as input and converts it to
  * an integer.
- * It handles optional leading whitespace characters, an optional sign 
+ * It handles optional leading whitespace characters, an optional sign
  * character, and a sequence of numeric digits. If the resulting integer
  * exceeds the range
  * of `int`, the function returns 0.
@@ -27,8 +27,8 @@
  */
 int	ft_atoi(const char *nptr)
 {
-	int	i;
-	int	sign;
+	int		i;
+	int		sign;
 	long	result;
 
 	i = 0;
@@ -58,7 +58,7 @@ int	ft_atoi(const char *nptr)
  * @brief Checks the validity of command-line arguments.
  *
  * This function verifies that the number of arguments is either 5 or 6.
- * It also ensures that each argument, when converted to an integer, is 
+ * It also ensures that each argument, when converted to an integer, is
  * greater than 0.
  *
  * @param argc The number of command-line arguments.
@@ -84,31 +84,34 @@ int	check_args(int argc, char **argv)
 /**
  * @brief Starts the simulation of philosophers dining.
  *
- * This function initializes and starts threads for each philosopher and a monitor thread.
+ * This function initializes and starts threads for each philosopher and a 
+ * monitor thread.
  * It then waits for all philosopher threads and the monitor thread to complete.
  *
- * @param table A pointer to the table structure containing philosopher and monitor information.
+ * @param table A pointer to the table structure containing philosopher and 
+ * monitor information.
  *
  * @return Always returns 0.
  */
-int start_simulation(t_table *table)
+int	start_simulation(t_table *table)
 {
-	int i;
+	int	i;
 
 	i = 0;
-    while (i < table->philo_count)
+	while (i < table->philo_count)
 	{
-        thread_handler(&table->philosophers[i].thread, philosopher_routine, &table->philosophers[i], CREATE);
-        i++;
-    }
-    thread_handler(&table->monitor, monitor_routine, table, CREATE);
-    i = 0;
-    while (i < table->philo_count)
+		thread_handler(&table->philosophers[i].thread, philosopher_routine,
+			&table->philosophers[i], CREATE);
+		i++;
+	}
+	thread_handler(&table->monitor, monitor_routine, table, CREATE);
+	i = 0;
+	while (i < table->philo_count)
 	{
-        thread_handler(&table->philosophers[i].thread, NULL, NULL, JOIN);
-        i++;
-    }
-    thread_handler(&table->monitor, NULL, NULL, JOIN);
+		thread_handler(&table->philosophers[i].thread, NULL, NULL, JOIN);
+		i++;
+	}
+	thread_handler(&table->monitor, NULL, NULL, JOIN);
 	return (0);
 }
 
@@ -125,9 +128,9 @@ int start_simulation(t_table *table)
  *
  * @param table Pointer to the table structure containing all resources.
  */
-void free_table(t_table *table)
+void	free_table(t_table *table)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < table->philo_count)
@@ -154,33 +157,33 @@ void free_table(t_table *table)
  * environment and starts the philosophers simulation.
  *
  * Usage:
- * ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_meals]
+ * ./philo nbr_of_philosophers time_die time_eat time_sleep [nbr_of_meals]
  *
  * @param argc The number of command-line arguments.
  * @param argv The array of command-line arguments.
  * @return int Returns 0 on successful execution, 1 on error.
  */
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    t_table *table;
-	
-	// printf("time: %ld\n", get_time());
-    if (check_args(argc, argv))
+	t_table	*table;
+
+	if (check_args(argc, argv))
 	{
-        printf("Error: invalid arguments\n");
-        printf("Usage: ./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_meals]\n");
-        return (1);
-    }
-    table = init_table(argc, argv);
-    if (!table)
+		printf("Error: invalid arguments\n");
+		printf("Usage: ./philo number_of_philosophers time_to_die \
+		time_to_eat time_to_sleep [number_of_meals]\n");
+		return (1);
+	}
+	table = init_table(argc, argv);
+	if (!table)
 	{
-        return (1);
+		return (1);
 	}
 	if (start_simulation(table))
 	{
 		printf("Error: simulation failed\n");
 		return (1);
 	}
-    // free_table(table);
-    return (0);
+	// free_table(table);
+	return (0);
 }
