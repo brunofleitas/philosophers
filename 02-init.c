@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   02-init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 19:21:43 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/16 13:50:53 by bruno            ###   ########.fr       */
+/*   Updated: 2024/10/16 14:48:27 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,11 @@
  * @param argv The command-line arguments.
  * @return A pointer to the initialized table structure, or NULL on failure.
  */
-t_table	*init_table(int argc, char **argv)
+void	init_table(int argc, char **argv, t_table *table)
 {
-	t_table	*table;
-
-	table = malloc(sizeof(t_table));
-	if (!table)
-		return (NULL);
 	init_table_data(table, argc, argv);
-	if (!init_forks(table) || !init_philosophers(table))
-	{
-		if (table->forks)
-			free(table->forks);
-		if (table->philosophers)
-			free(table->philosophers);
-		free(table);
-		return (NULL);
-	}
-	return (table);
+	init_forks(table);
+	init_philosophers(table);
 }
 
 /**
@@ -62,7 +49,7 @@ void	init_table_data(t_table *table, int argc, char **argv)
 	table->time_to_eat = ft_atoi(argv[3]);
 	table->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
-		table->meal_count = ft_atoi(argv[5]) + 1;
+		table->meal_count = ft_atoi(argv[5]);
 	else
 		table->meal_count = -1;
 	table->start_time = get_time();
@@ -86,9 +73,6 @@ int	init_forks(t_table *table)
 {
 	int	i;
 
-	table->forks = malloc(sizeof(t_fork) * table->philo_count);
-	if (!table->forks)
-		return (0);
 	i = 0;
 	while (i < table->philo_count)
 	{
@@ -113,9 +97,6 @@ int	init_philosophers(t_table *table)
 {
 	int	i;
 
-	table->philosophers = malloc(sizeof(t_philosopher) * table->philo_count);
-	if (!table->philosophers)
-		return (0);
 	i = 0;
 	while (i < table->philo_count)
 	{

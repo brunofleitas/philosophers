@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:14:01 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/16 14:05:12 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:43:04 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	start_simulation(t_table *table)
  *
  * @param table Pointer to the table structure containing all resources.
  */
-void	free_table(t_table *table)
+/* void	free_table(t_table *table)
 {
 	int	i;
 
@@ -147,7 +147,7 @@ void	free_table(t_table *table)
 	free(table->philosophers);
 	free(table->forks);
 	free(table);
-}
+} */
 
 /**
  * @file 01-philosophers.c
@@ -165,7 +165,7 @@ void	free_table(t_table *table)
  */
 int	main(int argc, char **argv)
 {
-	t_table	*table;
+	t_table	table;
 
 	if (check_args(argc, argv))
 	{
@@ -174,12 +174,8 @@ int	main(int argc, char **argv)
 		time_to_eat time_to_sleep [number_of_meals]\n");
 		return (1);
 	}
-	table = init_table(argc, argv);
-	if (!table)
-	{
-		return (1);
-	}
-	if (start_simulation(table))
+	init_table(argc, argv, &table);
+	if (start_simulation(&table))
 	{
 		printf("Error: simulation failed\n");
 		return (1);

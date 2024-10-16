@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:14:22 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/02 12:30:55 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:41:58 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ typedef struct s_table
 	int 			all_threads_created;
 	pthread_mutex_t	table_mutex;
 	pthread_mutex_t	write_mutex;
-	t_fork			*forks;
+	t_fork			forks[201];
 	pthread_t		monitor;
 	pthread_mutex_t sim;
 	pthread_mutex_t set_value;
-	t_philosopher	*philosophers;
+	t_philosopher	philosophers[201];
 }					t_table;
 
 /* ************************************************************************** */
@@ -100,7 +100,7 @@ typedef struct s_table
 int		ft_atoi(const char *str);
 int		check_args(int argc, char **argv);
 
-t_table	*init_table(int argc, char **argv);
+void	init_table(int argc, char **argv, t_table *table);
 void	init_table_data(t_table *table, int argc, char **argv);
 int		init_forks(t_table *table);
 int		init_philosophers(t_table *table);

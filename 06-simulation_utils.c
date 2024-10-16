@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   06-simulation_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bruno <bruno@student.42.fr>                +#+  +:+       +#+        */
+/*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 09:25:58 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/10/16 13:52:17 by bruno            ###   ########.fr       */
+/*   Updated: 2024/10/16 14:46:05 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ void	write_status(t_philosopher *philosopher, e_philo_state state,
 	else if ((state == THINKING) && !simulation_finished(table))
 		printf("%ld %d %s\n", time, philosopher->id + 1, "is thinking");
 	else if ((state == TAKE_LEFT_FORK) && !simulation_finished(table))
-		printf("%ld %d %s\n", time, philosopher->id + 1, "has taken fork");
+		printf("%ld %d %s\n", time, philosopher->id + 1, "has taken a fork");
 	else if ((state == TAKE_RIGHT_FORK) && !simulation_finished(table))
-		printf("%ld %d %s\n", time, philosopher->id + 1, "has taken fork");
+		printf("%ld %d %s\n", time, philosopher->id + 1, "has taken a fork");
 	mutex_handler(&table->write_mutex, UNLOCK);
 }
