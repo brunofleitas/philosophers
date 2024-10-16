@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 20:01:07 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/16 14:32:35 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:21:23 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	handle_eating_routine(t_philosopher *philo, t_table *table)
 			philo->is_full = 1;
 			mutex_handler(&philo->left_fork->fork_mutex, UNLOCK);
 			mutex_handler(&philo->right_fork->fork_mutex, UNLOCK);
-			return;
+			return ;
 		}
 	}
 	mutex_handler(&philo->left_fork->fork_mutex, UNLOCK);

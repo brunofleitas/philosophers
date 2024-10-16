@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 03:14:01 by bruno             #+#    #+#             */
-/*   Updated: 2024/10/16 14:43:04 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:20:40 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	check_args(int argc, char **argv)
 	while (i < argc)
 	{
 		if (ft_atoi(argv[i]) <= 0)
+			return (1);
+		if (ft_atoi(argv[1]) > 200)
 			return (1);
 		i++;
 	}
@@ -170,8 +172,8 @@ int	main(int argc, char **argv)
 	if (check_args(argc, argv))
 	{
 		printf("Error: invalid arguments\n");
-		printf("Usage: ./philo number_of_philosophers time_to_die \
-		time_to_eat time_to_sleep [number_of_meals]\n");
+		printf("Usage: ./philo number_of_philosophers time_to_die");
+		printf(" time_to_eat time_to_sleep [number_of_meals]\n");
 		return (1);
 	}
 	init_table(argc, argv, &table);
@@ -180,6 +182,5 @@ int	main(int argc, char **argv)
 		printf("Error: simulation failed\n");
 		return (1);
 	}
-	// free_table(table);
 	return (0);
 }
